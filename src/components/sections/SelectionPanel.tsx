@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import locationIcon from '../../assets/location-icon.png';
 import calendarIcon from '../../assets/calendar-Icon.png';
 import typeIcon from '../../assets/type-icon.png';
@@ -68,6 +68,7 @@ const SelectionPanel = () => {
     <div>
       <h2 className='text-lg font-semibold mb-4'>表示内容を選択</h2>
 
+        {/* 都道府県セレクトボックス */}
       <div className='flex items-center py-6 border-t border-b border-gray-300'>
         <div className='w-14 flex items-center space-x-1.5'>
           <img
@@ -78,8 +79,12 @@ const SelectionPanel = () => {
           <span className='text-gray-700 text-md'>場所</span>
         </div>
         <select className='flex-grow ml-6 block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 text-sm p-2 bg-white'>
-          <option>東京都</option>
-          <option>大阪府</option>
+            {/* locationsステートを用いてオプションを生成 */}
+            {locations.map((location) => (
+              <option key={location.code} value={location.code}>
+                {location.name}
+              </option>
+            ))}
         </select>
       </div>
 
