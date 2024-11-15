@@ -88,6 +88,7 @@ const SelectionPanel = () => {
         </select>
       </div>
 
+        {/* 年度セレクトボックス */}
       <div className='flex items-center py-6 border-b border-gray-300'>
         <div className='flex items-center space-x-1.5'>
           <img
@@ -98,8 +99,12 @@ const SelectionPanel = () => {
           <span className='text-gray-700 text-md'>年度</span>
         </div>
         <select className='flex-grow ml-6 block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 text-sm p-2 bg-white'>
-          <option>2018年</option>
-          <option>2019年</option>
+            {/* yearsステートを用いてオプションを生成 */}
+            {years.map((year) => (
+              <option key={year} value={year}>
+                {year}年
+              </option>
+            ))}
         </select>
       </div>
 
