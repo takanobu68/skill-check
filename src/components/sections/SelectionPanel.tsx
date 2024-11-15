@@ -48,6 +48,11 @@ const SelectionPanel = ({ onSelectionSubmit }: SelectionPanelProps) => {
     setYears(distinctYears);
   }, []);
 
+  const handleSubmit = () => {
+    // 親コンポーネント(App)に選択内容を渡す
+    onSelectionSubmit(selectedLocation, selectedYear, selectedType);
+  };
+
   return (
     <div className='flex flex-col justify-between bg-gray-100  p-6 rounded-lg w-[359px] h-[780px]'>
       <div>
