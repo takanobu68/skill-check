@@ -81,11 +81,11 @@ const GraphArea = ({ location, year, type }: GraphAreaProps) => {
               {/* 選択された場所のバー用グラデーション */}
               <linearGradient
                 id='gradientSelected'
-                x1='0'
-                y1='0'
-                x2='1'
-                y2='1'
-                gradientTransform='rotate(136.95)'
+                gradientUnits='userSpaceOnUse'
+                x1='0%'
+                y1='0%'
+                x2='100%'
+                y2='100%'
               >
                 <stop offset='24.03%' stopColor='#009984' />
                 <stop offset='75.73%' stopColor='#97BF4A' />
@@ -94,11 +94,11 @@ const GraphArea = ({ location, year, type }: GraphAreaProps) => {
               {/* 関東平均のバー用グラデーション */}
               <linearGradient
                 id='gradientAverage'
-                x1='0'
-                y1='0'
-                x2='1'
-                y2='1'
-                gradientTransform='rotate(156.04)'
+                gradientUnits='userSpaceOnUse'
+                x1='0%'
+                y1='0%'
+                x2='100%'
+                y2='100%'
               >
                 <stop offset='-0.08%' stopColor='#706D65' />
                 <stop offset='99.92%' stopColor='#57544C' />
