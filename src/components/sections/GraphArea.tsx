@@ -2,7 +2,7 @@ import React from 'react';
 import locationIcon from '../../assets/location-icon-white.png';
 import calendarIcon from '../../assets/calendar-icon-white.png';
 import typeIcon from '../../assets/type-icon-white.png';
-
+import { GraphAreaProps } from '../../types/Props';
 import {
   BarChart,
   Bar,
@@ -13,6 +13,7 @@ import {
   Cell,
 } from 'recharts';
 
+const GraphArea = ({ location, year, type }: GraphAreaProps) => {
 const data = [
   { name: '東京都', value: 60000 },
   { name: '関東平均', value: 35000 },
