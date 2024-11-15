@@ -14,12 +14,11 @@ import {
 } from 'recharts';
 
 const GraphArea = ({ location, year, type }: GraphAreaProps) => {
-const data = [
-  { name: '東京都', value: 60000 },
-  { name: '関東平均', value: 35000 },
-];
+  const data = [
+    { name: location, value: 60000 },
+    { name: '関東平均', value: 35000 },
+  ];
 
-const GraphArea = () => {
   return (
     <div className='flex flex-col items-center justify-center h-[780px]'>
       {/* 上部情報表示エリア */}
@@ -27,17 +26,17 @@ const GraphArea = () => {
         {/* 場所 */}
         <div className='flex items-center space-x-2'>
           <img src={locationIcon} alt='Location Icon' className='w-4 h-4' />
-          <span className='text-white text-2xl'>東京都</span>
+          <span className='text-white text-2xl'>{location}</span>
         </div>
         {/* 年度 */}
         <div className='flex items-center space-x-2'>
           <img src={calendarIcon} alt='Calendar Icon' className='w-4 h-4' />
-          <span className='text-white text-2xl'>2018年</span>
+          <span className='text-white text-2xl'>{year}年</span>
         </div>
         {/* 種類 */}
         <div className='flex items-center space-x-2'>
           <img src={typeIcon} alt='Type Icon' className='w-4 h-4' />
-          <span className='text-white text-2xl'>住宅地</span>
+          <span className='text-white text-2xl'>{type}</span>
         </div>
       </div>
 
@@ -106,7 +105,7 @@ const GraphArea = () => {
                 <Cell
                   key={`cell-${index}`}
                   fill={
-                    entry.name === '東京都'
+                    entry.name === location
                       ? 'url(#gradientTokyo)'
                       : 'url(#gradientKanto)'
                   }
