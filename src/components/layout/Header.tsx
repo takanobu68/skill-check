@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from '../assets/logo-landit.svg';
+import logo from '../../assets/logo-landit.svg';
 
 const Header = () => (
   <header className='bg-white shadow' style={{ height: '74px' }}>

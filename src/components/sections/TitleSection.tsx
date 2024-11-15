@@ -1,5 +1,5 @@
 import React from 'react';
-import graphIcon from '../assets/graph-icon.png';
+import graphIcon from '../../assets/graph-icon.png';
 
 const TitleSection = () => (
   <div className='p-4'>
