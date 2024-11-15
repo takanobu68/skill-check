@@ -31,7 +31,8 @@ const App = () => {
           <div className='flex-grow'>
             <GraphArea />
           </div>
-          <SelectionPanel />
+          {/* SelectionPanelにコールバック関数を渡す */}
+          <SelectionPanel onSelectionSubmit={handleSelectionSubmit} />
         </div>
       </main>
       <Footer />
