@@ -68,10 +68,14 @@ const SelectionPanel = ({ onSelectionSubmit }: SelectionPanelProps) => {
             />
             <span className='text-gray-700 text-md'>場所</span>
           </div>
-          <select className='flex-grow ml-6 block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 text-sm p-2 bg-white'>
+          <select
+            className='flex-grow ml-6 block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 text-sm p-2 bg-white'
+            value={selectedLocation}
+            onChange={(e) => setSelectedLocation(e.target.value)}
+          >
             {/* locationsステートを用いてオプションを生成 */}
             {locations.map((location) => (
-              <option key={location.code} value={location.code}>
+              <option key={location.code} value={location.name}>
                 {location.name}
               </option>
             ))}
@@ -88,7 +92,11 @@ const SelectionPanel = ({ onSelectionSubmit }: SelectionPanelProps) => {
             />
             <span className='text-gray-700 text-md'>年度</span>
           </div>
-          <select className='flex-grow ml-6 block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 text-sm p-2 bg-white'>
+          <select
+            className='flex-grow ml-6 block rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 text-gray-900 text-sm p-2 bg-white'
+            value={selectedYear}
+            onChange={(e) => setSelectedYear(Number(e.target.value))}
+          >
             {/* yearsステートを用いてオプションを生成 */}
             {years.map((year) => (
               <option key={year} value={year}>
@@ -114,7 +122,9 @@ const SelectionPanel = ({ onSelectionSubmit }: SelectionPanelProps) => {
                 type='radio'
                 name='type'
                 className='form-radio text-blue-600'
-                value='1'
+                value='住宅地'
+                checked={selectedType === '住宅地'}
+                onChange={(e) => setSelectedType(e.target.value)}
               />
               <span className='ml-2 text-gray-700'>住宅地</span>
             </label>
@@ -123,7 +133,9 @@ const SelectionPanel = ({ onSelectionSubmit }: SelectionPanelProps) => {
                 type='radio'
                 name='type'
                 className='form-radio text-blue-600'
-                value='2'
+                value='商業地'
+                checked={selectedType === '商業地'}
+                onChange={(e) => setSelectedType(e.target.value)}
               />
               <span className='ml-2 text-gray-700'>商業地</span>
             </label>
