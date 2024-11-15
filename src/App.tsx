@@ -29,7 +29,12 @@ const App = () => {
         <TitleSection />
         <div className='flex mt-10 space-x-6'>
           <div className='flex-grow'>
-            <GraphArea />
+            {/* GraphAreaに場所・年度・種類のステートを渡す */}
+            <GraphArea
+              location={selectedLocation}
+              year={selectedYear}
+              type={selectedType}
+            />
           </div>
           {/* SelectionPanelにコールバック関数を渡す */}
           <SelectionPanel onSelectionSubmit={handleSelectionSubmit} />
