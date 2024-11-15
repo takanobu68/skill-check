@@ -53,10 +53,34 @@ const GraphArea = ({ location, year, type }: GraphAreaProps) => {
       : 0;
   }, [prefectureCode, year, type, typedData]);
 
+  // 選択された`年度`と`種類`に対応する都道府県すべての平均値を計算
+  const averageValue = useMemo(() => {
+    const numericType = typeMapping[type] || 1;
+    // 指定された年度と種類に一致するデータをすべて取得
+    const itemsForYearAndType = typedData.filter(
+      (item) =>
+        item.year === year &&
+        parseInt(item.data.result.type, 10) === numericType &&
+        item.data.result.years.length > 0
+    );
+
+    if (itemsForYearAndType.length === 0) {
+      return 0;
+    }
+
+    // 取得したデータのvalueの平均を計算
+    const sum = itemsForYearAndType.reduce(
+      (acc, curr) => acc + curr.data.result.years[0].value,
+      0
+    );
+    const avg = sum / itemsForYearAndType.length;
+    return Math.floor(avg);
+  }, [year, type, typedData]);
+
   // グラフに表示するデータ
   const chartData = [
     { name: location, value: selectedValue },
-    { name: '関東平均', value: 35000 }, // 例として固定値を使用
+    { name: '関東平均', value: averageValue },
   ];
 
   return (
@@ -89,9 +113,9 @@ const GraphArea = ({ location, year, type }: GraphAreaProps) => {
           >
             {/* グラデーションの定義 */}
             <defs>
-              {/* 東京都のバー用グラデーション */}
+              {/* 選択された場所のバー用グラデーション */}
               <linearGradient
-                id='gradientTokyo'
+                id='gradientSelected'
                 x1='0'
                 y1='0'
                 x2='1'
@@ -104,7 +128,7 @@ const GraphArea = ({ location, year, type }: GraphAreaProps) => {
 
               {/* 関東平均のバー用グラデーション */}
               <linearGradient
-                id='gradientKanto'
+                id='gradientAverage'
                 x1='0'
                 y1='0'
                 x2='1'
@@ -146,8 +170,8 @@ const GraphArea = ({ location, year, type }: GraphAreaProps) => {
                   key={`cell-${index}`}
                   fill={
                     entry.name === location
-                      ? 'url(#gradientTokyo)'
-                      : 'url(#gradientKanto)'
+                      ? 'url(#gradientSelected)'
+                      : 'url(#gradientAverage)'
                   }
                 />
               ))}
