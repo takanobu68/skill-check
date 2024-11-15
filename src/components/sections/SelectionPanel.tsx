@@ -2,8 +2,68 @@ import React from 'react';
 import locationIcon from '../../assets/location-icon.png';
 import calendarIcon from '../../assets/calendar-Icon.png';
 import typeIcon from '../../assets/type-icon.png';
+import data from '../../data/estate_transactions.json'; // JSONファイルをインポートする
 
-const SelectionPanel = () => (
+// JSONデータの型を定義
+interface YearData {
+  year: number;
+  value: number;
+}
+
+interface ResultData {
+  prefectureCode: string;
+  prefectureName: string;
+  type: string;
+  years: YearData[];
+}
+
+interface DataItem {
+  year: number;
+  prefectureCode: number;
+  type: number;
+  data: {
+    result: ResultData;
+  };
+}
+
+const SelectionPanel = () => {
+  // 都道府県と年度のステートを定義
+  const [locations, setLocations] = useState<{ code: string; name: string }[]>(
+    []
+  );
+  const [years, setYears] = useState<number[]>([]);
+
+  useEffect(() => {
+    // データを正しい型にキャスト
+    const typedData = data as DataItem[];
+
+    // 都道府県データを `prefectureCode` 順にソートしてセット
+    const distinctLocations = Array.from(
+      // JSONデータから都道府県コードと名前のペアを抽出
+      new Map(
+        typedData.map((item) => [
+          item.data.result.prefectureCode, // キー: 都道府県コード (一意)
+          item.data.result.prefectureName, // 値: 都道府県名
+        ])
+      )
+    )
+      // 都道府県コード(prefectureCode)を昇順でソート
+      .sort((a, b) => parseInt(a[0], 10) - parseInt(b[0], 10))
+      // ソートされたデータを {code, name} のオブジェクト配列に変換
+      .map(([code, name]) => ({ code, name }));
+
+    // 重複を排除した都道府県リストをステートに保存
+    setLocations(distinctLocations);
+
+    // 年度データを重複排除して昇順にソート
+    const distinctYears = Array.from(
+      new Set(typedData.map((item) => item.year))
+    ).sort((a, b) => a - b);
+
+    setYears(distinctYears);
+  }, []);
+
+  return (
   <div className='flex flex-col justify-between bg-gray-100  p-6 rounded-lg w-[359px] h-[780px]'>
     <div>
       <h2 className='text-lg font-semibold mb-4'>表示内容を選択</h2>
