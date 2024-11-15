@@ -39,13 +39,13 @@ const SelectionPanel = () => (
       </div>
 
       <div className='py-6 flex'>
-        <div className='flex space-x-1.5 pt-1'>
+        <div className='flex space-x-1.5'>
           <img
             src={typeIcon}
             alt='Type Icon'
             className='w-4.5 h-5 text-gray-600'
           />
-          <span className='text-gray-700 text-sm'>種類</span>
+          <span className='text-gray-700 text-md'>種類</span>
         </div>
         <div className='flex flex-col space-y-2 ml-6'>
           <label className='flex items-center'>
