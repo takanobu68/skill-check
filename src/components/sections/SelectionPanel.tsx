@@ -3,28 +3,7 @@ import locationIcon from '../../assets/location-icon.png';
 import calendarIcon from '../../assets/calendar-Icon.png';
 import typeIcon from '../../assets/type-icon.png';
 import data from '../../data/estate_transactions.json'; // JSONファイルをインポートする
-
-// JSONデータの型を定義
-interface YearData {
-  year: number;
-  value: number;
-}
-
-interface ResultData {
-  prefectureCode: string;
-  prefectureName: string;
-  type: string;
-  years: YearData[];
-}
-
-interface DataItem {
-  year: number;
-  prefectureCode: number;
-  type: number;
-  data: {
-    result: ResultData;
-  };
-}
+import { DataItem } from '../../types/EstateData'; // 型をインポート
 
 const SelectionPanel = () => {
   // 都道府県と年度のステートを定義
