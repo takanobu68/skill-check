@@ -5,6 +5,10 @@ import typeIcon from '../../assets/type-icon.png';
 import data from '../../data/estate_transactions.json';
 import { DataItem } from '../../types/EstateData';
 import { SelectionPanelProps } from '../../types/Props';
+import {
+  getDistinctLocations,
+  getDistinctYears,
+} from '../../utils/selectionDataProcessors';
 
 const SelectionPanel = ({ onSelectionSubmit }: SelectionPanelProps) => {
   // ユーザーが選択した場所・年度・種類を管理するステート
@@ -22,29 +26,11 @@ const SelectionPanel = ({ onSelectionSubmit }: SelectionPanelProps) => {
     // データを正しい型にキャスト
     const typedData = data as DataItem[];
 
-    // 都道府県データを `prefectureCode` 順にソートしてセット
-    const distinctLocations = Array.from(
-      // JSONデータから都道府県コードと名前のペアを抽出
-      new Map(
-        typedData.map((item) => [
-          item.data.result.prefectureCode, // キー: 都道府県コード (一意)
-          item.data.result.prefectureName, // 値: 都道府県名
-        ])
-      )
-    )
-      // 都道府県コード(prefectureCode)を昇順でソート
-      .sort((a, b) => parseInt(a[0], 10) - parseInt(b[0], 10))
-      // ソートされたデータを {code, name} のオブジェクト配列に変換
-      .map(([code, name]) => ({ code, name }));
-
-    // 重複を排除した都道府県リストをステートに保存
+    // ユーティリティ関数で都道府県データと年度データを取得
+    const distinctLocations = getDistinctLocations(typedData);
     setLocations(distinctLocations);
 
-    // 年度データを重複排除して昇順にソート
-    const distinctYears = Array.from(
-      new Set(typedData.map((item) => item.year))
-    ).sort((a, b) => a - b);
-
+    const distinctYears = getDistinctYears(typedData);
     setYears(distinctYears);
   }, []);
 
