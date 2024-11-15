@@ -143,7 +143,10 @@ const SelectionPanel = ({ onSelectionSubmit }: SelectionPanelProps) => {
         </div>
       </div>
 
-      <button className='w-full bg-blue-500 text-white font-semibold py-2 rounded-md hover:bg-blue-600'>
+      <button
+        className='w-full bg-blue-500 text-white font-semibold py-2 rounded-md hover:bg-blue-600'
+        onClick={handleSubmit}
+      >
         表示する
       </button>
     </div>
