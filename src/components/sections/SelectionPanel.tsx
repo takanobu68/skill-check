@@ -7,6 +7,11 @@ import { DataItem } from '../../types/EstateData';
 import { SelectionPanelProps } from '../../types/Props';
 
 const SelectionPanel = ({ onSelectionSubmit }: SelectionPanelProps) => {
+  // ユーザーが選択した場所・年度・種類を管理するステート
+  const [selectedLocation, setSelectedLocation] = useState<string>('東京都');
+  const [selectedYear, setSelectedYear] = useState<number>(2018);
+  const [selectedType, setSelectedType] = useState<string>('住宅地');
+
   // 都道府県と年度のステートを定義
   const [locations, setLocations] = useState<{ code: string; name: string }[]>(
     []
