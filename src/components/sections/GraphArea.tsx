@@ -14,68 +14,33 @@ import {
   ResponsiveContainer,
   Cell,
 } from 'recharts';
-
-// `SelectionPanel`で選択された「種類」を、JSONの`type`に対応する数値にマッピング
-const typeMapping: Record<string, number> = {
-  住宅地: 1,
-  商業地: 2,
-};
+import {
+  getPrefectureCode,
+  getSelectedValue,
+  getAverageValue,
+} from '../../utils/dataProcessor';
 
 const GraphArea = ({ location, year, type }: GraphAreaProps) => {
   // typedDataとしてJSONを型付きで扱う
   const typedData = data as DataItem[];
 
   // 選択された都道府県名に対応する都道府県コードを取得
-  const prefectureCode = useMemo(() => {
-    // typedDataから、`location`に対応する`prefectureCode`を取得
-    const locationItem = typedData.find(
-      (item) => item.data.result.prefectureName === location
-    );
-    return locationItem
-      ? parseInt(locationItem.data.result.prefectureCode, 10)
-      : null;
-  }, [location, typedData]);
+  const prefectureCode = useMemo(
+    () => getPrefectureCode(typedData, location),
+    [location, typedData]
+  );
 
   // 選択された`場所（prefectureCode）`と`年度（year）`と`種類`に対応するデータを取得
-  const selectedValue = useMemo(() => {
-    if (!prefectureCode) return 0;
-    const numericType = typeMapping[type] || 1; // '住宅地'の場合は1、'商業地'の場合は2
-    // JSONデータから該当する`DataItem`を探す
-    const dataItem = typedData.find(
-      (item) =>
-        parseInt(item.data.result.prefectureCode, 10) === prefectureCode &&
-        item.year === year &&
-        parseInt(item.data.result.type, 10) === numericType
-    );
-    // 該当する`DataItem`が見つからなければ0を返す
-    return dataItem && dataItem.data.result.years.length > 0
-      ? dataItem.data.result.years[0].value
-      : 0;
-  }, [prefectureCode, year, type, typedData]);
+  const selectedValue = useMemo(
+    () => getSelectedValue(typedData, prefectureCode, year, type),
+    [prefectureCode, year, type, typedData]
+  );
 
   // 選択された`年度`と`種類`に対応する都道府県すべての平均値を計算
-  const averageValue = useMemo(() => {
-    const numericType = typeMapping[type] || 1;
-    // 指定された年度と種類に一致するデータをすべて取得
-    const itemsForYearAndType = typedData.filter(
-      (item) =>
-        item.year === year &&
-        parseInt(item.data.result.type, 10) === numericType &&
-        item.data.result.years.length > 0
-    );
-
-    if (itemsForYearAndType.length === 0) {
-      return 0;
-    }
-
-    // 取得したデータのvalueの平均を計算
-    const sum = itemsForYearAndType.reduce(
-      (acc, curr) => acc + curr.data.result.years[0].value,
-      0
-    );
-    const avg = sum / itemsForYearAndType.length;
-    return Math.floor(avg);
-  }, [year, type, typedData]);
+  const averageValue = useMemo(
+    () => getAverageValue(typedData, year, type),
+    [year, type, typedData]
+  );
 
   // グラフに表示するデータ
   const chartData = [
