@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import locationIcon from '../../assets/location-icon.png';
 import calendarIcon from '../../assets/calendar-Icon.png';
 import typeIcon from '../../assets/type-icon.png';
-import data from '../../data/estate_transactions.json'; // JSONファイルをインポートする
-import { DataItem } from '../../types/EstateData'; // 型をインポート
+import data from '../../data/estate_transactions.json';
+import { DataItem } from '../../types/EstateData';
+import { SelectionPanelProps } from '../../types/Props';
 
-const SelectionPanel = () => {
+const SelectionPanel = ({ onSelectionSubmit }: SelectionPanelProps) => {
   // 都道府県と年度のステートを定義
   const [locations, setLocations] = useState<{ code: string; name: string }[]>(
     []
